@@ -137,6 +137,7 @@ export default function JadwalPage() {
             onChange={(e) => setForm({ ...form, id: e.target.value })}
           />
         </Grid>
+
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <InputLabel id="bus-label">Pilih Bus</InputLabel>
@@ -145,7 +146,11 @@ export default function JadwalPage() {
               value={form.bus_id}
               label="Pilih Bus"
               onChange={(e) => setForm({ ...form, bus_id: e.target.value })}
+              sx={{ minWidth: 250 }} 
             >
+              <MenuItem value="">
+                <em>-- Pilih ID Bus --</em>
+              </MenuItem>
               {busList.map((bus) => (
                 <MenuItem key={bus.id} value={bus.id}>
                   {bus.id} - {bus.nama_bus}
@@ -154,6 +159,7 @@ export default function JadwalPage() {
             </Select>
           </FormControl>
         </Grid>
+
         <Grid item xs={12} sm={6}>
           <TextField
             label="Tujuan"
@@ -162,6 +168,7 @@ export default function JadwalPage() {
             onChange={(e) => setForm({ ...form, tujuan: e.target.value })}
           />
         </Grid>
+
         <Grid item xs={12} sm={6}>
           <TextField
             label="Tanggal"
@@ -172,6 +179,7 @@ export default function JadwalPage() {
             onChange={(e) => setForm({ ...form, tanggal: e.target.value })}
           />
         </Grid>
+
         <Grid item xs={12} sm={6}>
           <TextField
             label="Jam"
@@ -182,6 +190,7 @@ export default function JadwalPage() {
             onChange={(e) => setForm({ ...form, jam: e.target.value })}
           />
         </Grid>
+
         <Grid item xs={12}>
           <Button variant="contained" onClick={handleSubmit}>
             {isEditing ? 'Update' : 'Simpan'}
@@ -243,5 +252,5 @@ export default function JadwalPage() {
         </Alert>
       </Snackbar>
     </Container>
-  );
+  );
 }

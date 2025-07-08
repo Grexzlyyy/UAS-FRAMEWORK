@@ -11,6 +11,11 @@ export default function HomePage() {
   const [jadwal, setJadwal] = useState([]);
   const [kategori, setKategori] = useState([]);
 
+  const getNamaKategori = (kategoriId) => {
+    const kategoriItem = kategori.find((k) => k.id === kategoriId);
+    return kategoriItem ? kategoriItem.nama_kategori : '-';
+  };  
+
   useEffect(() => {
     const fetchAll = async () => {
       try {
@@ -80,22 +85,22 @@ export default function HomePage() {
             <CardContent sx={cardStyle}>
               <Typography variant="h6" gutterBottom>Bus</Typography>
               <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>ID</TableCell>
-                    <TableCell>Nama</TableCell>
-                    <TableCell>Kapasitas</TableCell>
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Nama Bus</TableCell>
+                  <TableCell>Kategori</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {bus.map((b) => (
+                  <TableRow key={b.id}>
+                    <TableCell>{b.id}</TableCell>
+                    <TableCell>{b.nama_bus}</TableCell>
+                    <TableCell>{getNamaKategori(b.kategori_id)}</TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {bus.map((b) => (
-                    <TableRow key={b.id}>
-                      <TableCell>{b.id}</TableCell>
-                      <TableCell>{b.nama_bus}</TableCell>
-                      <TableCell>{b.kapasitas}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
+                ))}
+              </TableBody>
               </Table>
             </CardContent>
           </Card>
@@ -107,22 +112,27 @@ export default function HomePage() {
             <CardContent sx={cardStyle}>
               <Typography variant="h6" gutterBottom>Jadwal</Typography>
               <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>ID</TableCell>
-                    <TableCell>Tanggal</TableCell>
-                    <TableCell>Jam</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {jadwal.map((j) => (
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Tanggal</TableCell>
+                  <TableCell>Jam</TableCell>
+                  <TableCell>Nama Bus</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {jadwal.map((j) => {
+                  const busTerkait = bus.find((b) => b.id === j.bus_id);
+                  return (
                     <TableRow key={j.id}>
                       <TableCell>{j.id}</TableCell>
                       <TableCell>{j.tanggal}</TableCell>
                       <TableCell>{j.jam}</TableCell>
+                      <TableCell>{busTerkait ? busTerkait.nama_bus : '-'}</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
+                  );
+                })}
+              </TableBody>
               </Table>
             </CardContent>
           </Card>
